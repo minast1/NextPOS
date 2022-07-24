@@ -1,32 +1,29 @@
+import { ProductCategories } from "./../components/ProductCategories";
+import { Cart } from "./../components/Cart";
 import * as React from "react";
 import type { NextPage } from "next";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import Link from "../components/Link";
+import Grid from "@mui/material/Grid";
+import { NextPageWithLayout } from "./_app";
+import Layout from "../components/Layout";
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
   return (
-    <Container maxWidth="lg">
-      <Box
-        sx={{
-          my: 4,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="h4" component="h1" gutterBottom>
-          Home - Nextron (with-typescript-material-ui)
-        </Typography>
-        <img src="/images/logo.png" />
-        <Link href="/about" color="secondary">
-          To the about page
-        </Link>
-      </Box>
-    </Container>
+    <Grid container spacing={2} sx={{ px: 2 }}>
+      <Grid item xs={5}>
+        <Cart />
+      </Grid>
+      <Grid item xs={7}>
+        <ProductCategories />
+      </Grid>
+    </Grid>
   );
+};
+
+Home.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout>{page}</Layout>;
 };
 
 export default Home;
