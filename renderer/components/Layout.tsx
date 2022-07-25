@@ -14,8 +14,11 @@ import Stack from "@mui/material/Stack";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import LayoutButton from "./LayoutButton";
 import Link from "./Link";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   return (
     <Container
       maxWidth="xl"
@@ -53,9 +56,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           Administrator
         </Button>
         <Button
-          component={Link}
+          onClick={async () => {
+            const data = await signOut({
+              callbackUrl: "http://localhost:8888/auth",
+              redirect: false,
+            });
+            router.push(data.url);
+          }}
           variant="contained"
-          href="about"
           sx={{
             textTransform: "capitalize",
             backgroundColor: "gray",
@@ -68,8 +76,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </Button>
         <Button
           variant="contained"
-          component={Link}
-          href="auth"
           sx={{
             textTransform: "capitalize",
             backgroundColor: "red",

@@ -8,8 +8,11 @@ import Link from "../components/Link";
 import Grid from "@mui/material/Grid";
 import { NextPageWithLayout } from "./_app";
 import Layout from "../components/Layout";
+import { useSession } from "next-auth/react";
 
 const Home: NextPageWithLayout = () => {
+  //const { data: session } = useSession();
+  ////console.log(session?.user);
   return (
     <Grid container spacing={2} sx={{ px: 2 }}>
       <Grid item xs={5}>

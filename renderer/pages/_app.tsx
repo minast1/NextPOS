@@ -9,6 +9,7 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../lib/theme";
 import createEmotionCache from "../lib/createEmotionCache";
 import Layout from "../components/Layout";
+import { SessionProvider } from "next-auth/react";
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -27,16 +28,21 @@ export default function MyApp(props: MyAppProps) {
 
   const getLayout = Component.getLayout ?? ((page) => page);
   return getLayout(
-    <CacheProvider value={emotionCache}>
-      <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
+    <SessionProvider
+      session={pageProps.session}
+      // baseUrl="http://localhost:8888"
+    >
+      <CacheProvider value={emotionCache}>
+        <Head>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+        </Head>
+        <ThemeProvider theme={theme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
 
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </CacheProvider>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </CacheProvider>
+    </SessionProvider>
   );
 }
